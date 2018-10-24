@@ -1,9 +1,5 @@
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.FindBy;
-import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -29,11 +25,11 @@ public class LoginTest {
 
     @Test
     public void githubFailedLogin() throws InterruptedException {
-        driver.get("https://www.github.com/login");
+       // driver.get("https://www.github.com/login");
         LoginPage loginPage = new LoginPage(driver);
-        loginPage.loginWith("test@test.com", "test");
+        loginPage.loginWith("tomsmith", "SuperSecretPassword!");
 
-        assertTrue(loginPage.isErrorMessageDisplayed(), "Error message is displayed");
+        assertTrue(loginPage.isSuccessfullDisplayed(), "Error message is displayed");
     }
 
     @AfterMethod
