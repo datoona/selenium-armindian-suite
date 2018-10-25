@@ -1,7 +1,8 @@
+import base.BasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class LoginPage {
+public class LoginPage extends BasePage {
     private WebDriver driver;
     private By userNameField = By.id("username");
     private By passwordField = By.id("password");
@@ -9,17 +10,24 @@ public class LoginPage {
     private By successfullMessage = By.id("flash");
 
     public LoginPage(WebDriver driver) {
+        super(driver);
         this.driver = driver;
-        driver.get("https://the-internet.herokuapp.com/login");
+        driver.get(getURL());
+    }
+
+    public String getURL() {
+        return "https://the-internet.herokuapp.com/login";
     }
 
     public void loginWith(String username, String password) {
-        driver.findElement(userNameField).sendKeys(username);
-        driver.findElement(passwordField).sendKeys(password);
-        driver.findElement(signInButton).click();
+        type(userNameField, username);
+        type(passwordField, password);
+        click(signInButton);
     }
 
     public boolean isSuccessfullDisplayed() {
         return driver.findElement(successfullMessage).isDisplayed();
     }
+
+
 }

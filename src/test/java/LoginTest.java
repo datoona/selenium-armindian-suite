@@ -11,7 +11,7 @@ public class LoginTest {
 
     @BeforeMethod
     public void setUp() {
-        System.setProperty("webdriver.chrome.driver", "C:\\Program Files\\Browser Driver\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "./src/main/resources/drivers/chromedriver-windows-32bit.exe");
         driver = new ChromeDriver();
     }
 
@@ -24,7 +24,7 @@ public class LoginTest {
     }
 
     @Test
-    public void githubFailedLogin() throws InterruptedException {
+    public void loginExample() throws InterruptedException {
        // driver.get("https://www.github.com/login");
         LoginPage loginPage = new LoginPage(driver);
         loginPage.loginWith("tomsmith", "SuperSecretPassword!");
