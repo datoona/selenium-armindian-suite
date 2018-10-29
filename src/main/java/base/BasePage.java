@@ -1,6 +1,7 @@
 package base;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -16,6 +17,7 @@ public abstract class BasePage {
     public abstract String getURL();
 
     public void type(WebElement element, String text){
+        System.out.println("Typing " + text + " to element with location: " + element.toString());
         element.sendKeys(text);
     }
 
@@ -27,20 +29,36 @@ public abstract class BasePage {
         type(By.cssSelector(cssSelector), text);
     }
 
-    public List<WebElement> findElements(By location){
-        return driver.findElements(location);
-    }
-
     public WebElement find(By location){
         return driver.findElement(location);
     }
 
+    public List<WebElement> findElements(By location){
+        return driver.findElements(location);
+    }
+
     public void click(WebElement element){
-        System.out.println("clicking on element with location:" + element.toString());
+        System.out.println("Clicking on element with location:" + element.toString());
         element.click();
     }
 
     public void click(By location){
         click(find(location));
+    }
+
+    public boolean isDisplayed(WebElement element){
+        try {
+            return element.isDisplayed();
+        }catch (NoSuchElementException e){
+            return false;
+        }
+    }
+
+    public boolean isDisplayed(By location){
+        try {
+            return find(location).isDisplayed();
+        }catch (NoSuchElementException e){
+            return false;
+        }
     }
 }
