@@ -9,9 +9,8 @@ public class LoginPage extends BasePage {
     private By signInButton = By.xpath("//*[@id=\"login\"]/button");
     private By successfullMessage = By.id("flash");
 
-    public LoginPage(WebDriver driver) {
-        super(driver);
-        this.driver = driver;
+    public LoginPage() {
+        super();
         driver.get(getURL());
     }
 
