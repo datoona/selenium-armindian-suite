@@ -3,6 +3,7 @@ package base;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static base.DriverHelper.getDriver;
@@ -14,8 +15,8 @@ public class WaitHelper {
         return waitHelper;
     }
 
-    public static void waitForElementToBeVisible(final By location){
-        new WebDriverWait(getDriver(), 10).until(webDriver -> webDriver.findElement(location));
+    public static void waitForElementToBeVisible(By location){
+        new WebDriverWait(getDriver(), 10).until(ExpectedConditions.visibilityOfElementLocated(location));
     }
 
     public void waitForElementToBeVisible(WebElement element){
