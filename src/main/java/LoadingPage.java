@@ -1,13 +1,22 @@
 import base.BasePage;
 import base.WaitHelper;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.FindBys;
 
 import static base.WaitHelper.waitForElementToBeVisible;
 
 
-public class DynamicLoadPage extends BasePage {
+public class LoadingPage extends BasePage {
 
-    public DynamicLoadPage(){
+    @FindBy(css = "#start button")
+    private WebElement startButton;
+
+    @FindBy(css = "#finish h4")
+    private WebElement finishText;
+
+    public LoadingPage(){
         super();
         driver.get(getURL());
     }
@@ -17,19 +26,16 @@ public class DynamicLoadPage extends BasePage {
         return "http://the-internet.herokuapp.com/dynamic_loading/1";
     }
 
-    private By startButton = By.cssSelector("#start button");
-    private By helloWordText = By.cssSelector("#finish h4");
-
     public void openHelloWordText(){
         click(startButton);
-        WaitHelper.getWait().waitForElementToBeVisible(helloWordText);
+        WaitHelper.getWait().waitForElementToBeVisible(finishText);
     }
 
     public String getFinishText(){
-        return find(helloWordText).getText();
+        return finishText.getText();
     }
-    public boolean isHelloWordDisplayed(){
-        return isDisplayed(helloWordText);
+    public boolean isFinishTextDisplayed() {
+        return isDisplayed(finishText);
     }
 
     @Override
