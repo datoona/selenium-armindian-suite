@@ -34,6 +34,7 @@ public class LoadingPage extends BasePage {
     public String getFinishText(){
         return finishText.getText();
     }
+
     public boolean isFinishTextDisplayed() {
         return isDisplayed(finishText);
     }
