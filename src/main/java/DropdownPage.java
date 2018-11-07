@@ -33,7 +33,7 @@ public class DropdownPage extends BasePage {
         select.selectByIndex(index);
     }
 
-    public void selectCustom(int index) {
+    public void selectOptionCustom(int index) {
         dropdown.click();
         options.get(index).click();
     }

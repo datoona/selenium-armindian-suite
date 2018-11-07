@@ -8,7 +8,7 @@ public class LoadingTest extends SeleniumBase {
     @Test
     public void elementVisible(){
         LoadingPage loadingPage = (LoadingPage) new LoadingPage().get();
-        loadingPage.openHelloWordText();
+        loadingPage.clickStart();
         assertTrue(loadingPage.isFinishTextDisplayed(),"Element is not visible");
         assertEquals(loadingPage.getFinishText(),"Hello World!", "Is not displayed");
 

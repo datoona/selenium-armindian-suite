@@ -23,9 +23,18 @@ public class CheckBoxPage extends BasePage {
         return "http://the-internet.herokuapp.com/checkboxes";
     }
 
+
+    public boolean isCheckboxChecked(int index) {
+        String attribute = checkboxes.get(index).getAttribute("checked");
+        if (attribute != null){
+            return Boolean.valueOf(attribute);
+        }else {
+            return false;
+        }
+    }
 // Ete defolt chi
 
-    public boolean isCheckBoxCheked(String text) {
+    public boolean isCheckBoxChecked(String text) {
         for (WebElement checkbox : checkboxes) {
             if (checkbox.getText().equals(text)) {
                 String attribute = checkbox.getAttribute("checked");
@@ -55,5 +64,5 @@ public class CheckBoxPage extends BasePage {
     public void clickCheckbox(int index) {
         click(checkboxes.get(index));
     }
-    
+
 }

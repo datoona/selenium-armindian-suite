@@ -26,7 +26,7 @@ public class LoadingPage extends BasePage {
         return "http://the-internet.herokuapp.com/dynamic_loading/1";
     }
 
-    public void openHelloWordText(){
+    public void clickStart(){
         click(startButton);
         WaitHelper.getWait().waitForElementToBeVisible(finishText);
     }
