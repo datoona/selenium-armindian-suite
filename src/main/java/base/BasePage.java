@@ -9,14 +9,14 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 
 import java.util.List;
 
-import static base.DriverHelper.getDriver;
+
 
 
 public abstract class BasePage<T extends LoadableComponent<T>> extends LoadableComponent<T> {
     protected WebDriver driver;
 
     public BasePage() {
-        this.driver = getDriver();
+        this.driver = DriverHelper.get().getDriver();
         PageFactory.initElements(driver,this);
     }
 
