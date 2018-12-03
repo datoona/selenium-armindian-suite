@@ -13,12 +13,16 @@ public class TaigaProjectTest extends SeleniumBase {
     public void projectPage(Method method) throws IOException {
         Client.login("davetest@mailinator.com", "davetest");
         String projectName = method.getName() + new Date().getTime();
-        JsonObject prject = new JsonObject();
-        prject.addProperty("name", projectName);
-        prject.addProperty("description", "Test Project via API");
-        prject.addProperty("create_template", "1");
-        prject.addProperty("is_private", "false");
+        JsonObject project = new JsonObject();
+        project.addProperty("name", projectName);
+        project.addProperty("description", "Test Project via Api Description");
+        project.addProperty("creation_template", 1);
+        project.addProperty("is_private", false);
+        project = Client.createProject(project);
 
-        Client.createProjetc(prject);
+        login("davetest@mailinator.com", "davetest");
+        TaigaProjectPage projectPage = new TaigaProjectPage(project);
+
+
     }
 }
