@@ -8,6 +8,7 @@ import java.io.IOException;
 
 public class Client {
     private static String ACCESS_TOKEN = null;
+    private static final String BASE_URL = "https://api.taiga.io/api/v1";
 
     public static JsonObject login(String email, String password) throws IOException {
         OkHttpClient client = new OkHttpClient();
@@ -15,7 +16,7 @@ public class Client {
         MediaType mediaType = MediaType.parse("application/json");
         RequestBody body = RequestBody.create(mediaType, "{\"username\":\"" + email + "\",\"password\":\"" + password + "\",\"type\":\"normal\"}\r\n");
         Request request = new Request.Builder()
-                .url("https://api.taiga.io/api/v1/auth")
+                .url(BASE_URL + "/auth")
                 .post(body)
                 .addHeader("Content-Type", "application/json")
                 .addHeader("Cache-Control", "no-cache")
@@ -30,21 +31,73 @@ public class Client {
 
     }
 
-    public static JsonObject createProject(JsonObject project) throws IOException {
+    public static Response post(String url, JsonObject jsonObject) {
         OkHttpClient client = new OkHttpClient();
         MediaType mediaType = MediaType.parse("application/json");
-        RequestBody body = RequestBody.create(mediaType, project.toString());
+        RequestBody body = RequestBody.create(mediaType, jsonObject.toString());
         Request request = new Request.Builder()
-                .url("https://api.taiga.io/api/v1/projects")
+                .url(BASE_URL + url)
                 .post(body)
                 .addHeader("Content-Type", "application/json")
                 .addHeader("Authorization", "Bearer " + ACCESS_TOKEN)
                 .build();
+        Response response = null;
+        try {
+             response = client.newCall(request).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (!response.isSuccessful()){
+            throw new Error("HTTP error code: " + String.valueOf(response.code()));
+        }
+        return response;
+    }
 
-        Response response = client.newCall(request).execute();
-        String jsonString = response.body().string();
-        return  new JsonParser().parse(jsonString).getAsJsonObject();
+    public static Response get(String url){
+        OkHttpClient client = new OkHttpClient();
 
+        Request request = new Request.Builder()
+                .url("https://api.taiga.io/api/v1" + url)
+                .get()
+                .addHeader("Authorization", "Bearer " + ACCESS_TOKEN)
+                .addHeader("Content-Type", "application/json")
+                .build();
+
+        Response response = null;
+        try {
+            response = client.newCall(request).execute();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        assert response !=null;
+        if (!response.isSuccessful()){
+            throw new Error("HTTP error code: "+ String.valueOf(response.code()));
+        }
+        return response;
+    }
+
+    public static void delete(String url, JsonObject jsonObject) {
+        OkHttpClient client = new OkHttpClient();
+
+        Request request = new Request.Builder()
+                .url(BASE_URL + url + "/" + jsonObject.get("id").getAsString())
+                .delete(null)
+                .addHeader("Authorization", "Bearer " + ACCESS_TOKEN)
+                .addHeader("Content-Type", "application/json")
+                .build();
+
+        Response response = null;
+        try {
+            response = client.newCall(request).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        assert response != null;
+        if (!response.isSuccessful()) {
+            throw new Error("HTTP error code: " + String.valueOf(response.code()));
+        }
     }
 
 }

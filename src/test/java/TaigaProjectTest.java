@@ -1,3 +1,4 @@
+import api.ApiHelper;
 import api.Client;
 import com.google.gson.JsonObject;
 import org.testng.annotations.Test;
@@ -12,14 +13,10 @@ public class TaigaProjectTest extends SeleniumBase {
     @Test
     public void projectPage(Method method) throws IOException {
         Client.login("davetest@mailinator.com", "davetest");
-        String projectName = method.getName() + new Date().getTime();
-        JsonObject project = new JsonObject();
-        project.addProperty("name", projectName);
-        project.addProperty("description", "Test Project via Api Description");
-        project.addProperty("creation_template", 1);
-        project.addProperty("is_private", false);
-        project = Client.createProject(project);
+        JsonObject project = ApiHelper.createProject();
+        JsonObject issue = ApiHelper.createIssue(project.get("id").getAsInt());
 
+        new TaigaLoginPage();
         login("davetest@mailinator.com", "davetest");
         TaigaProjectPage projectPage = new TaigaProjectPage(project);
 
