@@ -1,5 +1,6 @@
 package base;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -14,6 +15,7 @@ import java.util.List;
 
 
 public abstract class BasePage<T extends LoadableComponent<T>> extends LoadableComponent<T> {
+    private static final Logger LOGGER = Logger.getLogger("BasePage");
     protected WebDriver driver;
 
     public BasePage() {

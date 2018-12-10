@@ -3,6 +3,7 @@ import base.DriverHelper;
 import com.google.gson.JsonObject;
 import io.qameta.allure.Attachment;
 import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -15,7 +16,9 @@ import org.testng.annotations.AfterMethod;
 import java.io.File;
 import java.io.IOException;
 
+
 public class SeleniumBase implements IHookable {
+    private static final Logger LOGGER = Logger.getLogger("SeleniumBase");
     private static WebDriver driver = DriverHelper.get().getDriver();
 
     @AfterMethod
@@ -46,8 +49,8 @@ public class SeleniumBase implements IHookable {
     @Attachment(value = "Failure in method {0}", type = "image/png")
     private byte[] takeScreenshot(String methodName) throws IOException {
         File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-        FileUtils.copyFile(screenshot, new File("./target/screenshots" + methodName + ".png"));
-        System.out.println("***TAKING a screenshot");
+        FileUtils.copyFile(screenshot, new File("./target/screenshots/" + methodName + ".png"));
+        LOGGER.info("***TAKING a screenshot");
         return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
     }
 }
